@@ -2,7 +2,7 @@
  ******************************************************************************
  * @file           : F103RCC_Interface.h
  * @author         : Amany_Elsedawy
- * @version        : 0.0
+ * @version        : 1.0
  * @date           : 14-10-2025
  * @brief          : Interface file for RCC driver
  * @note           : Built for STM32F103C8T6
@@ -12,8 +12,8 @@
 #ifndef STM32F103_RCC_Interface_H
 #define STM32F103_RCC_Interface_H
 
-//include STD library
-#include"STD_TYPE.h"
+
+#include<stdint.h>
 
 #define TIMEOUT_HSI    500
 #define TIMEOUT_HSE    1000
@@ -159,18 +159,18 @@ typedef enum
 
 //function prototype to Enable/Disable CLK and set CLK source
 
-u8 RCCF_SetClk(RCCF_ClockSource_t ClkSrc, RCCF_ClockStatus_t ClkStatus);
+uint8_t  RCCF_SetClk(RCCF_ClockSource_t ClkSrc, RCCF_ClockStatus_t ClkStatus);
 
 //function prototype to select system Clock(HSI / HSE / PLL)
 
-u8 RCCF_SetSystemClock(RCCF_ClockSource_t ClkSrc);
+uint8_t  RCCF_SetSystemClock(RCCF_ClockSource_t ClkSrc);
 
 
 //function prototype to set PLL configuration
-u8 RCCF_PLLConfig(PLL_Mul_t PLLMull,RCCF_PLLSrc_DIV_t PllSrc);
+uint8_t  RCCF_PLLConfig(PLL_Mul_t PLLMull,RCCF_PLLSrc_DIV_t PllSrc);
 
 //function prototype to Enable/Disable RTC CLK and set RTC CLK source
-u8 RCCF_SetRTC_Clock(RCCF_RTCSource_t RTCSrc,RCCF_ClockStatus_t RTCStatus );
+uint8_t  RCCF_SetRTC_Clock(RCCF_RTCSource_t RTCSrc,RCCF_ClockStatus_t RTCStatus );
 
 void RCCF_AHBEnableClock(RCCF_AHB_Periph_t peripheral);
 void RCCF_AHBDisableClock(RCCF_AHB_Periph_t peripheral);

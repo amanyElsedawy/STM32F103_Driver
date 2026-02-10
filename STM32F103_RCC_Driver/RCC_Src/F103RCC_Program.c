@@ -2,19 +2,21 @@
  ******************************************************************************
  * @file           : F103RCC_Program.c
  * @author         : Amany_Elsedawy
- * @version        : 0.0
+ * @version        : 1.0
  * @date           : 14-10-2025
  * @brief          : Main program body for RCC driver
  * @note           : Built for STM32F103C8T6
  ******************************************************************************
  */
 
-//include STD library
+
+#include<stdint.h>
 #include"STD_TYPE.h"
+//include STD library
+#include <Stm32F103LIB.h>
 
+/*Stm32F446xx Library*/
 #include"F103RCC_Interface.h"
-
-#include"Stm32F103_Registers.h"
 
 #include"F103RCC_Private.h"
 
@@ -22,10 +24,10 @@
 
 //function to Enable/Disable CLK & set CLK source
 
-u8 RCCF_SetClk(RCCF_ClockSource_t ClkSrc, RCCF_ClockStatus_t ClkStatus){
+uint8_t RCCF_SetClk(RCCF_ClockSource_t ClkSrc, RCCF_ClockStatus_t ClkStatus){
 	//create error status variable
-	u8 LocalErrorStatus = STD_OK;
-	u32 counter=0;
+	uint8_t LocalErrorStatus = STD_OK;
+	uint32_t counter=0;
 	//check CLK on or off
 	if(ClkStatus==RCC_Enable){
 		//switch which type of RCC Source select
@@ -76,7 +78,7 @@ u8 RCCF_SetClk(RCCF_ClockSource_t ClkSrc, RCCF_ClockStatus_t ClkStatus){
 		case RCC_PLL:
 			//set pin 0 in CR to enable PLL
 			RCC->RCC_CR |=(1<<24);
-			u32 counter=0;
+			uint32_t counter=0;
 			//wait for PLL flag
 			while(!(RCC->RCC_CR&(1<<25))){
 				counter++;
@@ -131,9 +133,9 @@ u8 RCCF_SetClk(RCCF_ClockSource_t ClkSrc, RCCF_ClockStatus_t ClkStatus){
 
 //function to select system Clock(HSI / HSE / PLL) by SWITCH MUX after enable SRC
 
-u8 RCCF_SetSystemClock(RCCF_ClockSource_t ClkSrc){
+uint8_t RCCF_SetSystemClock(RCCF_ClockSource_t ClkSrc){
 	//create error status variable
-	u8 LocalErrorStatus = STD_OK;
+	uint8_t LocalErrorStatus = STD_OK;
 
 	switch(ClkSrc){
 	//SW by bit 0 & 1 in RCC_CFGR Register
@@ -174,10 +176,10 @@ u8 RCCF_SetSystemClock(RCCF_ClockSource_t ClkSrc){
 
 //LOOK u have MULL Options from 4 to 9 Available
 //function to config PLL configuration
-u8 RCCF_PLLConfig(PLL_Mul_t PLLMull,RCCF_PLLSrc_DIV_t PllSrc){
+uint8_t RCCF_PLLConfig(PLL_Mul_t PLLMull,RCCF_PLLSrc_DIV_t PllSrc){
 
 
-	u8 LocalErrorStatus = STD_OK;
+	uint8_t LocalErrorStatus = STD_OK;
 	//check for PLL is off before config
 	if((RCC->RCC_CR>>24)&1){
 
@@ -216,11 +218,11 @@ u8 RCCF_PLLConfig(PLL_Mul_t PLLMull,RCCF_PLLSrc_DIV_t PllSrc){
 }
 
 //function to Enable/Disable RTC CLK and set RTC CLK source& select the clock source for the RTC.
-u8 RCCF_SetRTC_Clock(RCCF_RTCSource_t RTCSrc,RCCF_ClockStatus_t RTCStatus ){
+uint8_t RCCF_SetRTC_Clock(RCCF_RTCSource_t RTCSrc,RCCF_ClockStatus_t RTCStatus ){
 
 	//create error status variable
-	u8 LocalErrorStatus = STD_OK;
-	u32 counter=0;
+	uint8_t LocalErrorStatus = STD_OK;
+	uint32_t counter=0;
 	// Enable power interface clock (needed for backup domain)
 	RCC->RCC_APB1ENR |= (1 << 28);
 
